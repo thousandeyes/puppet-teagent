@@ -1,0 +1,17 @@
+# == Class: teagent::params
+# Copyright © 2013 ThousandEyes, Inc.
+#
+# === Copyright
+#
+# Copyright © 2013 ThousandEyes, Inc.
+#
+class teagent::params {
+  ### te-agent parameters
+  $browserbot = false
+  $international_langs = false
+  $account_token = '<account-token>'
+  $log_file = '/var/log/te-agent.log'
+  $proxy_host = ''
+  $proxy_port = '0'
+  $ip_version = 'ipv4'
+}
