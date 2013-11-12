@@ -32,12 +32,12 @@ ThousandEyes private agent.
  }
  ```
 
- * Set the log file location
+ * Set the log path location
  
  ```
  class { 'teagent': 
      account_token => 'your_account_token_goes_here',
-     log_file	 => '/var/log/te-agent.log',
+     log_path	 => '/var/log',
  }
  ```
 

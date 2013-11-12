@@ -16,8 +16,8 @@
 #   Account token for the agent.
 #   Default is the sample value, which equals a disabled agent.
 #
-# [*log_file*]
-#   Agent log file path. Default: /var/log/te-agent.log
+# [*log_path*]
+#   Agent log path. Default: /var/log
 #
 # [*proxy_host*]
 #   Proxy hostname. Default (disabled): ''
@@ -47,7 +47,7 @@ class teagent(
   $browserbot = 'UNSET',
   $international_langs = 'UNSET',
   $account_token = 'UNSET',
-  $log_file = 'UNSET',
+  $log_path = 'UNSET',
   $proxy_host = 'UNSET',
   $proxy_port = 'UNSET',
   $ip_version = 'UNSET'
@@ -71,9 +71,9 @@ class teagent(
     default => $account_token,
   }
 
-  $real_log_file = $log_file ? {
-    'UNSET' => $::teagent::params::log_file,
-    default => $log_file,
+  $real_log_path = $log_path ? {
+    'UNSET' => $::teagent::params::log_path,
+    default => $log_path,
   }
 
   $real_proxy_host = $proxy_host ? {

@@ -10,7 +10,7 @@ class teagent::params {
   $browserbot = false
   $international_langs = false
   $account_token = '<account-token>'
-  $log_file = '/var/log/te-agent.log'
+  $log_path = '/var/log'
   $proxy_host = ''
   $proxy_port = '0'
   $ip_version = 'ipv4'

@@ -4,7 +4,7 @@
 CFG_FILE=/etc/te-agent.cfg
 
 ACCOUNT_TOKEN="account-token=<%= @real_account_token %>"
-LOG_FILE="log-file=<%= @real_log_file %>"
+LOG_PATH="log-path=<%= @real_log_path %>"
 BIND_ADDR="bind-addr="
 PROXY_HOST="proxy-host=<%= @real_proxy_host %>"
 PROXY_PORT="proxy-port=<%= @real_proxy_port %>"
@@ -23,9 +23,9 @@ fi
 CUR_ACCOUNT_TOKEN=$(cat ${CFG_FILE}|grep 'account-token')
 sed -i ${CFG_FILE} -e "s/$CUR_ACCOUNT_TOKEN/$ACCOUNT_TOKEN/g" >/dev/null 2>&1
 
-# sed log-file
-CUR_LOG_FILE=$(cat ${CFG_FILE}|grep 'log-file')
-sed -i ${CFG_FILE} -e "s,$CUR_LOG_FILE,$LOG_FILE,g" >/dev/null 2>&1
+# sed log-path
+CUR_LOG_PATH=$(cat ${CFG_FILE}|grep 'log-path')
+sed -i ${CFG_FILE} -e "s,$CUR_LOG_PATH,$LOG_PATH,g" >/dev/null 2>&1
 
 # sed proxy-host
 CUR_PROXY_HOST=$(cat ${CFG_FILE}|grep 'proxy-host')
