@@ -24,7 +24,7 @@ class teagent::dependency {
           class { 'teagent::repository': require => Package['lsb-release'] }
         }
         default: {
-          fail('Only Ubuntu 10.4 (lucid) and 12.04 (precise) are supported. Please contact support.')
+          fail('Only Debian 6 (squeeze - 6.x) is supported. Please contact support.')
         }
       }
     }
