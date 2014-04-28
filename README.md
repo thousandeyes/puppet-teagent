@@ -21,6 +21,15 @@ ThousandEyes private agent.
      browserbot    => true,
  }
  ```
+
+* Install the ThousandEyes Agent Utilities
+
+ ```
+ class { 'teagent':
+     account_token => 'your_account_token_goes_here',
+     agent_utils   => true,
+ }
+ ```
 	
  * Enable browserbot and install the international language packages
 

@@ -8,6 +8,7 @@
 class teagent::params {
   ### te-agent parameters
   $browserbot = false
+  $agent_utils = false
   $international_langs = false
   $account_token = '<account-token>'
   $log_path = '/var/log'

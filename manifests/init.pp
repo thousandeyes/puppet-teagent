@@ -8,7 +8,11 @@
 #   Set to 'true' to enable BrowserBot.
 #   Default: false
 #
-# [*$international_langs*]
+# [*agent_utils*]
+#   Set to 'true' to install the ThousandEyes Agent Utilities.
+#   Default: false
+#
+# [*international_langs*]
 #   Set to 'true' to install the international language support package.
 #   Default: false
 #
@@ -45,6 +49,7 @@
 #
 class teagent(
   $browserbot = 'UNSET',
+  $agent_utils = 'UNSET',
   $international_langs = 'UNSET',
   $account_token = 'UNSET',
   $log_path = 'UNSET',
@@ -59,6 +64,11 @@ class teagent(
   $real_browserbot = $browserbot ? {
     'UNSET' => $::teagent::params::browserbot,
     default => $browserbot,
+  }
+
+  $real_agent_utils = $agent_utils ? {
+    'UNSET' => $::teagent::params::agent_utils,
+    default => $agent_utils,
   }
 
   $real_international_langs = $international_langs ? {
@@ -102,14 +112,21 @@ class teagent(
     ],
   }
 
-  if $browserbot {
+  if $real_browserbot {
     package { 'te-browserbot':
       ensure  => 'installed',
       require => Package['te-agent'],
     }
   }
 
-  if $international_langs {
+  if $real_agent_utils {
+    package { 'te-agent-utils':
+      ensure  => 'latest',
+      require => Package['te-agent'],
+    }
+  }
+
+  if $real_international_langs {
     package { 'te-intl-fonts':
       ensure  => 'latest',
       require => [
