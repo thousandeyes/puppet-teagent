@@ -33,6 +33,10 @@
 #   Ip version for the agent to run with. Can be either 'ipv4' or 'ipv6'.
 #   Default: 'ipv4'
 #
+# [*set_repo*]
+#   If set to false doesn't try to check depdendencies and install the repo.
+#   Default: true
+#
 # === Examples
 #
 # Call teagent as a parameterized class
@@ -55,7 +59,8 @@ class teagent(
   $log_path = 'UNSET',
   $proxy_host = 'UNSET',
   $proxy_port = 'UNSET',
-  $ip_version = 'UNSET'
+  $ip_version = 'UNSET',
+  $set_repo = 'UNSET',
 ) {
 
   #we want the module to be fully compatible with all Puppet 2.6.x versions
@@ -101,15 +106,26 @@ class teagent(
     default => $ip_version,
   }
 
-  # this takes care of the dependencies (repos)
-  include teagent::dependency
+  $real_set_repo = $set_repo ? {
+    'UNSET' => $::teagent::params::set_repo,
+    default => $set_repo,
+  }
+
+  # this takes care of the dependencies (repos) if set to true
+  if ($real_set_repo) {
+    include teagent::dependency
+    $teagent_requires = [
+      Class['teagent::dependency'],
+      Class['teagent::repository'],
+    ]
+  }
+  else {
+    $teagent_requires = []
+  }
 
   package { 'te-agent':
     ensure  => 'installed',
-    require => [
-      Class['teagent::dependency'],
-      Class['teagent::repository'],
-    ],
+    require => $teagent_requires,
   }
 
   if $real_browserbot {

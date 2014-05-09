@@ -69,6 +69,15 @@ ThousandEyes private agent.
  }
  ```
 
+* Don't check the dependencies and don't add the ThousandEyes repository
+
+ ```
+ class { 'teagent':
+     account_token => 'your_account_token_goes_here',
+     set_repo      => false, 
+ }
+ ```
+
 ## License
 This program is free software: you can redistribute it and/or modify  
 it under the terms of the GNU General Public License as published by  
