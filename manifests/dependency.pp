@@ -29,13 +29,15 @@ class teagent::dependency {
       }
     }
     ubuntu: {
-      if ($::lsbdistcodename != 'lucid') and ($::lsbdistcodename != 'precise') {
-        fail('Only Ubuntu 10.4 (lucid) and 12.04 (precise) are supported. Please contact support.')
-      }
-      else {
-        # the OS check passed, install the repo
-        package { 'lsb-release': ensure => 'installed' }
-        class { 'teagent::repository': require => Package['lsb-release'] }
+      case $::lsbdistcodename {
+        lucid, precise, trusty: {
+          # the OS check passed, install the repo
+          package { 'lsb-release': ensure => 'installed' }
+          class { 'teagent::repository': require => Package['lsb-release'] }
+        }
+        default: {
+          fail('Only Ubuntu 10.4 (lucid), 12.04 (precise) and 14.04 (trusty) are supported. Please contact support.')
+        }
       }
     }
     default: {
