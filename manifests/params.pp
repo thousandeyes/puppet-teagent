@@ -14,6 +14,8 @@ class teagent::params {
   $log_path = '/var/log'
   $proxy_host = ''
   $proxy_port = '0'
+  $proxy_user = ''
+  $proxy_pass = ''
   $ip_version = 'ipv4'
   $set_repo = true
 }

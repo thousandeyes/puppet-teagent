@@ -29,6 +29,12 @@
 # [*proxy_port*]
 #   Proxy port. Default (disabled): 0
 #
+# [*proxy_user*]
+#   Proxy username. Default (disabled): ''
+#
+# [*proxy_pass*]
+#   Proxy password. Default (disabled): ''
+#
 # [*ip_version*]
 #   Ip version for the agent to run with. Can be either 'ipv4' or 'ipv6'.
 #   Default: 'ipv4'
@@ -59,6 +65,8 @@ class teagent(
   $log_path = 'UNSET',
   $proxy_host = 'UNSET',
   $proxy_port = 'UNSET',
+  $proxy_user = 'UNSET',
+  $proxy_pass = 'UNSET',
   $ip_version = 'UNSET',
   $set_repo = 'UNSET',
 ) {
@@ -99,6 +107,16 @@ class teagent(
   $real_proxy_port = $proxy_port ? {
     'UNSET' => $::teagent::params::proxy_port,
     default => $proxy_port,
+  }
+
+  $real_proxy_user = $proxy_user ? {
+    'UNSET' => $::teagent::params::proxy_user,
+    default => $proxy_user,
+  }
+
+  $real_proxy_pass = $proxy_pass ? {
+    'UNSET' => $::teagent::params::proxy_pass,
+    default => $proxy_pass,
   }
 
   $real_ip_version = $ip_version ? {
