@@ -1,3 +1,4 @@
+
 # == Class: teagent::repository
 # Copyright © 2013 ThousandEyes, Inc.
 #
@@ -44,8 +45,8 @@ class teagent::repository {
   }
 
   $repo_import_cmd = $::operatingsystem ? {
-    /(?i-mx:ubuntu|debian)/ => "apt-key add ${pub_key_path}",
-    /(?i-mx:centos|redhat)/ => "rpm --import ${pub_key_path}",
+    /(?i-mx:ubuntu|debian)/ => "/usr/bin/apt-key add ${pub_key_path}",
+    /(?i-mx:centos|redhat)/ => "/bin/rpm --import ${pub_key_path}",
     default                 => 'UNSET',
   }
 
