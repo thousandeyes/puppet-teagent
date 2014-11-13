@@ -1,10 +1,10 @@
 # Puppet module: teagent
 
-This is a Puppet module for the ThousandEyes private agent.  
+This is a Puppet module for the ThousandEyes Enterprise Agent.  
 
 ## Usage
 Below are several use cases with different install options for the  
-ThousandEyes private agent.
+ThousandEyes Enterprise Agent.
 
  * Default settings
  ```
@@ -30,7 +30,7 @@ ThousandEyes private agent.
      agent_utils   => true,
  }
  ```
-	
+     
  * Enable browserbot and install the international language packages
 
  ```
@@ -46,7 +46,7 @@ ThousandEyes private agent.
  ```
  class { 'teagent': 
      account_token => 'your_account_token_goes_here',
-     log_path	 => '/var/log',
+     log_path   => '/var/log',
  }
  ```
 
@@ -55,12 +55,12 @@ ThousandEyes private agent.
  ```
  class { 'teagent': 
      account_token => 'your_account_token_goes_here',
-     proxy_host	   => 'proxy.example.com',
+     proxy_host        => 'proxy.example.com',
      proxy_port    => '8080',
  }
  ```
 
- * Set the ThousandEyes private agent to run with an IPv6 address
+ * Set the ThousandEyes Enterprise Agent to run with an IPv6 address
  
  ```
  class { 'teagent': 
