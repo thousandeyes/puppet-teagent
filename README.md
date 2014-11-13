@@ -55,7 +55,7 @@ ThousandEyes Enterprise Agent.
  ```
  class { 'teagent': 
      account_token => 'your_account_token_goes_here',
-     proxy_host        => 'proxy.example.com',
+     proxy_host    => 'proxy.example.com',
      proxy_port    => '8080',
  }
  ```
