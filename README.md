@@ -1,4 +1,4 @@
-# Puppet module: teagent
+# Puppet module: teagent [![Build Status](https://travis-ci.org/rhoml/puppet-teagent.png?branch=master)](https://travis-ci.org/rhoml/puppet-teagent)
 
 This is a Puppet module for the ThousandEyes Enterprise Agent.  
 
@@ -77,6 +77,39 @@ ThousandEyes Enterprise Agent.
      set_repo      => false, 
  }
  ```
+
+## Example using hiera
+
+### hiera.yaml
+
+```
+---
+:hierarchy:
+  - %{fqdn}
+  - %{datacenter}
+  - common
+:backends:
+  - yaml
+:yaml:
+  :datadir: '/etc/puppet/%{environment}/modules/hieradata'
+```
+
+### common.yaml
+```
+teagent::account_token: 'your_key_goes_here'
+teagent::controller: 'sc1.thousandeyes.com'
+teagent::log_file_size: '10'
+teagent::log_level: 'DEBUG'
+teagent::log_path: '/var/log'
+teagent::num_log_files: '13'
+```
+
+### teagent.foo.com.yaml
+
+```
+teagent::agent_utils: true
+teagent::browserbot: true
+```
 
 ## License
 This program is free software: you can redistribute it and/or modify  
