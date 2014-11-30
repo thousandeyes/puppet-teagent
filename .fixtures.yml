@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+    teagent: 'git://github.com/rhoml/puppet-teagent.git'
+  symlinks:
+    teagent: '#{source_dir}'

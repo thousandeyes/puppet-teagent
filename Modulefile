@@ -6,3 +6,7 @@ license 'GPLv3'
 summary 'ThousandEyes agent Module'
 description 'Puppet Module for the ThousandEyes agent'
 project_page 'https://github.com/thousandeyes/puppet-teagent'
+
+dependency 'puppetlabs/stdlib', '>= 2.2.1'
+dependency 'richardc/datacat', '>= 0.6.1'
+dependency 'puppetlabs/apt', '>=1.7.0'
