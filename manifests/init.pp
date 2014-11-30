@@ -56,132 +56,104 @@
 # === Copyright
 #
 # Copyright © 2013 ThousandEyes, Inc.
-#
-class teagent(
-  $browserbot = 'UNSET',
-  $agent_utils = 'UNSET',
-  $international_langs = 'UNSET',
-  $account_token = 'UNSET',
-  $log_path = 'UNSET',
-  $proxy_host = 'UNSET',
-  $proxy_port = 'UNSET',
-  $proxy_user = 'UNSET',
-  $proxy_pass = 'UNSET',
-  $ip_version = 'UNSET',
-  $set_repo = 'UNSET',
+class teagent (
+  $account_token       = 'sdfdsfdsf',
+  $agent_utils         = false,
+  $bind_addr           = $::ipaddress,
+  $browserbot          = false,
+  $controller          = 'sc1.thousandeyes.com',
+  $group               = 'root',
+  $international_langs = false,
+  $log_file_size       = 10,
+  $log_level           = 'DEBUG'
+  $log_path            = '/var/log',
+  $num_log_files       = 13,
+  $proxy_bypass        = undef,
+  $proxy_bypass_list   = undef,
+  $proxy_host          = undef,
+  $proxy_pass          = undef,
+  $proxy_port          = undef,
+  $proxy_user          = undef,
+  $user                = 'root',
+  $version             = 'latest',
 ) {
 
-  #we want the module to be fully compatible with all Puppet 2.6.x versions
-  include teagent::params
+  include teagent::dependencies
 
-  $real_browserbot = $browserbot ? {
-    'UNSET' => $::teagent::params::browserbot,
-    default => $browserbot,
+  # Validate String
+  validate_string($account_token)
+
+  validate_string($group)
+
+  validate_string($user)
+
+  validate_re($log_level, [ '^DEBUG$', '^INFO$' ],
+    'log_level must be \'DEBUG\' or \'INFO\'.')
+
+  # Validate absolute paths.
+  if $log_path != '' {
+    validate_absolute_path($log_path)
   }
 
-  $real_agent_utils = $agent_utils ? {
-    'UNSET' => $::teagent::params::agent_utils,
-    default => $agent_utils,
+  # Validate integers
+  if !is_integer($log_file_size) {
+    fail('log_fie_size must be an integer.')
   }
 
-  $real_international_langs = $international_langs ? {
-    'UNSET' => $::teagent::params::international_langs,
-    default => $international_langs,
+  if !is_integer($num_log_files) {
+    fail('num_log-files must be an integer.')
   }
 
-  $real_account_token = $account_token ? {
-    'UNSET' => $::teagent::params::account_token,
-    default => $account_token,
-  }
-
-  $real_log_path = $log_path ? {
-    'UNSET' => $::teagent::params::log_path,
-    default => $log_path,
-  }
-
-  $real_proxy_host = $proxy_host ? {
-    'UNSET' => $::teagent::params::proxy_host,
-    default => $proxy_host,
-  }
-
-  $real_proxy_port = $proxy_port ? {
-    'UNSET' => $::teagent::params::proxy_port,
-    default => $proxy_port,
-  }
-
-  $real_proxy_user = $proxy_user ? {
-    'UNSET' => $::teagent::params::proxy_user,
-    default => $proxy_user,
-  }
-
-  $real_proxy_pass = $proxy_pass ? {
-    'UNSET' => $::teagent::params::proxy_pass,
-    default => $proxy_pass,
-  }
-
-  $real_ip_version = $ip_version ? {
-    'UNSET' => $::teagent::params::ip_version,
-    default => $ip_version,
-  }
-
-  $real_set_repo = $set_repo ? {
-    'UNSET' => $::teagent::params::set_repo,
-    default => $set_repo,
-  }
-
-  # this takes care of the dependencies (repos) if set to true
-  if ($real_set_repo) {
-    include teagent::dependency
-    $teagent_requires = [
-      Class['teagent::dependency'],
-      Class['teagent::repository'],
-    ]
-  }
-  else {
-    $teagent_requires = []
-  }
-
-  package { 'te-agent':
-    ensure  => 'installed',
-    require => $teagent_requires,
-  }
-
-  if $real_browserbot {
-    package { 'te-browserbot':
-      ensure  => 'installed',
-      require => Package['te-agent'],
+  if $proxy_bypass != undef {
+    if !is_string($proxy_bypass) {
+      fail('proxy_bypass should be an string.')
     }
   }
 
-  if $real_agent_utils {
-    package { 'te-agent-utils':
-      ensure  => 'latest',
-      require => Package['te-agent'],
+  if $proxy_bypass_list != undef {
+    if !is_string($proxy_bypass_list) {
+      fail('proxy_bypass_list should be an string.')
     }
   }
 
-  if $real_international_langs {
-    package { 'te-intl-fonts':
-      ensure  => 'latest',
-      require => [
-        Class['teagent::dependency'],
-        Class['teagent::repository'],
-      ],
+  if $proxy_host != undef {
+    validate_re($proxy_host,['^sc([0-9])+?.thousandeyes.com$'],
+      'You must provide a valid host address.')
+  }
+
+  if $proxy_pass != undef {
+    if !is_string($proxy_pass) {
+      fail('proxy_pass should be an string.')
     }
   }
 
-  file { '/var/lib/te-agent/config_teagent.sh':
-    ensure  => 'present',
-    content => template('teagent/config_teagent.sh.erb'),
-    mode    => '0755',
-    require => [ Package['te-agent'], ],
+  if $proxy_port != undef {
+    if !is_string($proxy_port) {
+      fail('proxy_port should be an string.')
+    }
   }
 
-  exec { '/var/lib/te-agent/config_teagent.sh':
-    subscribe   => File['/var/lib/te-agent/config_teagent.sh'],
-    refreshonly => true,
+  if $proxy_user != undef {
+    if !is_string($proxy_user) {
+      fail('proxy_user should be an string.')
+    }
   }
 
-  # te-agent service
-  include teagent::service
+  # Packages
+  if !is_bool($agent_utils) {
+    fail('agent_utils must be a boolean.')
+  }
+
+  if !is_bool($browserbot) {
+    fail('browserbot must be a boolean.')
+  }
+
+  if !is_bool($international_langs) {
+    fail('international_langs must be a boolean.')
+  }
+
+  anchor { 'teagent::begin': }
+    class { '::teagent::agent': } ->
+  anchor {'teagent::end': }
+
 }

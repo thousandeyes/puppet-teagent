@@ -1,0 +1,10 @@
+rvm: 1.9.3
+notifications:
+  email:
+    - false
+env:
+  - PUPPET_VERSION=3.0.0
+  - PUPPET_VERSION=3.1.0
+  - PUPPET_VERSION=3.2.0
+  - PUPPET_VERSION=3.3.0
+  - PUPPET_VERSION=3.4.0
