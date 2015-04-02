@@ -20,8 +20,7 @@ class teagent::service {
         hasstatus  => true,
         start      => '/sbin/start te-agent',
         stop       => '/sbin/stop te-agent',
-        # there is probably a better way to deal with this
-        restart    => '/sbin/stop te-agent || true && /sbin/start te-agent',
+        restart    => '/sbin/stop te-agent; /sbin/start te-agent',
         status     => '/sbin/status te-agent',
         require    => $service_require,
         subscribe  => File['/var/lib/te-agent/config_teagent.sh'],
