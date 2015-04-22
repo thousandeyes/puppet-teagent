@@ -14,7 +14,7 @@ class teagent::repository {
     $lsbdistcodename = 'squeeze'
   }
   ## This is for CentOS/RedHat
-  $osrel = split($::operatingsystemrelease, '\.')[0]
+  $osrel = split($::operatingsystemrelease, '\.')
   $osmajrel = $osrel[0]
   ##
   $repo_os = $::operatingsystem ? {
