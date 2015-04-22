@@ -14,14 +14,12 @@ class teagent::service {
  case $::operatingsystem {
     centos, redhat, ubuntu: {
       $customservice = true
-      if ($::osfamily == 'RedHat') {
-        if ($::operatingsystemrelease =~ /^7/) {
-          # systemd
-          $start = '/usr/bin/systemctl start te-agent'
-          $stop = '/usr/bin/systemctl stop te-agent'
-          $restart = '/usr/bin/systemctl restart te-agent'
-          $status = '/usr/bin/systemctl status te-agent'
-        }
+      if ($::osfamily == 'RedHat') and ($::operatingsystemrelease =~ /^7/) {
+        # systemd
+        $start = '/usr/bin/systemctl start te-agent'
+        $stop = '/usr/bin/systemctl stop te-agent'
+        $restart = '/usr/bin/systemctl restart te-agent'
+        $status = '/usr/bin/systemctl status te-agent'
       }
       else {
         # Upstart
