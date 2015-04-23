@@ -18,14 +18,14 @@ class teagent::service {
         # systemd
         $start = '/usr/bin/systemctl start te-agent'
         $stop = '/usr/bin/systemctl stop te-agent'
-        $restart = '/usr/bin/systemctl restart te-agent'
+        $restart = '/usr/bin/systemctl restart te-agent' # This will work even if te-agent is stopped.
         $status = '/usr/bin/systemctl status te-agent'
       }
       else {
         # Upstart
         $start = '/sbin/start te-agent'
         $stop = '/sbin/stop te-agent'
-        $restart = '/bin/restart te-agent'
+        $restart = '/bin/stop te-agent; /bin/start te-agent' # /bin/restart won't work if it's not running.
         $status = '/bin/status te-agent'
       }
     }
