@@ -25,8 +25,8 @@ class teagent::service {
         # Upstart
         $start = '/sbin/start te-agent'
         $stop = '/sbin/stop te-agent'
-        $restart = '/bin/stop te-agent; /bin/start te-agent' # /bin/restart won't work if it's not running.
-        $status = '/bin/status te-agent'
+        $restart = '/sbin/stop te-agent; /sbin/start te-agent' # /bin/restart won't work if it's not running.
+        $status = '/sbin/status te-agent'
       }
     }
     default: {
