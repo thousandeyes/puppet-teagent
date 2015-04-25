@@ -9,34 +9,34 @@ class teagent::dependency {
   ### check if the OS is supported
   case $::operatingsystem {
     centos, redhat: {
-      if ($::operatingsystemrelease < 6.3) {
-        fail("Please upgrade your operating system to ${::operatingsystem} to >= 6.3")
-      }
-      else {
+      # 6.3 or 7.x, this is a string so we have to use regex.
+      if ($::operatingsystemrelease =~ /(^6.[3-9]|^7)/) {
         # the OS check passed, install the repo
         include teagent::repository
       }
+      else {
+        fail("Please upgrade your operating system to ${::operatingsystem} to 6.3 or newer.")
+      }
     }
     debian: {
-      case $::operatingsystemrelease {
-        '6.0','6.0.1','6.0.2','6.0.3','6.0.4','6.0.5','6.0.6','6.0.7','6.0.8','6.0.9': {
+      # Debian may come without lsb-release, so release codename is unreliable.
+      if ($::operatingsystemrelease =~ /(^6|^7)/) {
           package { 'lsb-release': ensure => 'installed' }
           class { 'teagent::repository': require => Package['lsb-release'] }
-        }
-        default: {
-          fail('Only Debian 6 (squeeze - 6.x) is supported. Please contact support.')
-        }
+      }
+      else {
+          fail('Only Debian 7 (wheezy 7.x) is supported. Please contact support.')
       }
     }
     ubuntu: {
       case $::lsbdistcodename {
-        lucid, precise, trusty: {
+        precise, trusty: {
           # the OS check passed, install the repo
           package { 'lsb-release': ensure => 'installed' }
           class { 'teagent::repository': require => Package['lsb-release'] }
         }
         default: {
-          fail('Only Ubuntu 10.4 (lucid), 12.04 (precise) and 14.04 (trusty) are supported. Please contact support.')
+          fail('Only Ubuntu 12.04 (precise) and 14.04 (trusty) are supported. Please contact support.')
         }
       }
     }
