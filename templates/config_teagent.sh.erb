@@ -41,8 +41,8 @@ CUR_PROXY_PASS=$(cat ${CFG_FILE}|grep 'proxy-pass')
 sed -i ${CFG_FILE} -e "s/$CUR_PROXY_PASS/$PROXY_PASS/g"
 
 TESTIP=$IP4TESTIP
-[ "$IP_VERSION" == "ipv6" ] && TESTIP=$IP6TESTIP
+[ "$IP_VERSION" = "ipv6" ] && TESTIP=$IP6TESTIP
 
-OURIP=$(ip ro get $TESTIP | head -n 1 | grep -o 'src [0-9:.]*' | cut -d ' ' -f 2)
+OURIP=$(ip ro get $TESTIP | head -n 1 | grep -o 'src [0-9a-fA-F:.]*' | cut -d ' ' -f 2)
 
 sed -i ${CFG_FILE} -e "s/^bind-addr=.*/bind-addr=$OURIP/"
