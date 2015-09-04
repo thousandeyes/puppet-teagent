@@ -68,6 +68,7 @@ class teagent(
   $proxy_user = 'UNSET',
   $proxy_pass = 'UNSET',
   $ip_version = 'UNSET',
+  $interface = 'UNSET',
   $set_repo = 'UNSET',
 ) {
 
@@ -122,6 +123,11 @@ class teagent(
   $real_ip_version = $ip_version ? {
     'UNSET' => $::teagent::params::ip_version,
     default => $ip_version,
+  }
+
+  $real_interface = $interface ? {
+    'UNSET' => $::teagent::params::interface,
+    default => $interface,
   }
 
   $real_set_repo = $set_repo ? {

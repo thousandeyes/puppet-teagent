@@ -17,5 +17,6 @@ class teagent::params {
   $proxy_user = ''
   $proxy_pass = ''
   $ip_version = 'ipv4'
+  $interface = ''
   $set_repo = true
 }
