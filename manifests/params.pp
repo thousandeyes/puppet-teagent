@@ -12,7 +12,7 @@ class teagent::params {
   $international_langs = false
   $account_token = '<account-token>'
   $log_path = '/var/log'
-  $log_file_size = '50'
+  $log_file_size = '10'
   $proxy_host = ''
   $proxy_port = '0'
   $proxy_user = ''
