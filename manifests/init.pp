@@ -63,6 +63,7 @@ class teagent(
   $international_langs = 'UNSET',
   $account_token = 'UNSET',
   $log_path = 'UNSET',
+  $log_file_size = 'UNSET',
   $proxy_host = 'UNSET',
   $proxy_port = 'UNSET',
   $proxy_user = 'UNSET',
@@ -98,6 +99,11 @@ class teagent(
   $real_log_path = $log_path ? {
     'UNSET' => $::teagent::params::log_path,
     default => $log_path,
+  }
+
+  $real_log_file_size = $log_file_size ? {
+    'UNSET' => $::teagent::params::log_file_size,
+    default => $log_file_size,
   }
 
   $real_proxy_host = $proxy_host ? {
