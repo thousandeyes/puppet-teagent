@@ -9,6 +9,7 @@ PROXY_HOST="proxy-host=<%= @real_proxy_host %>"
 PROXY_PORT="proxy-port=<%= @real_proxy_port %>"
 PROXY_USER="proxy-user=<%= @real_proxy_user %>"
 PROXY_PASS="proxy-pass=<%= @real_proxy_pass %>"
+PROXY_BYPASS_LIST="proxy-bypass-list=<%= @real_proxy_bypass_list %>"
 
 # default ip version is v4
 IP_VERSION="<%= @real_ip_version %>"
@@ -43,6 +44,10 @@ sed -i ${CFG_FILE} -e "s/$CUR_PROXY_USER/$PROXY_USER/g"
 # sed proxy-pass
 CUR_PROXY_PASS=$(cat ${CFG_FILE}|grep 'proxy-pass')
 sed -i ${CFG_FILE} -e "s/$CUR_PROXY_PASS/$PROXY_PASS/g"
+
+# sed proxy-bypass-list
+CUR_PROXY_BYPASS_LIST=$(cat ${CFG_FILE}|grep 'proxy-bypass-list')
+sed -i ${CFG_FILE} -e "s/$CUR_PROXY_BYPASS_LIST/$PROXY_BYPASS_LIST/g"
 
 # this is set to ':' because we want to exclude v6
 # if we want to exclude v4, set it to '\.'

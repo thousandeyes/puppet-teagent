@@ -35,6 +35,9 @@
 # [*proxy_pass*]
 #   Proxy password. Default (disabled): ''
 #
+# [*proxy_bypass_list*]
+#   Proxy bypass list. Semi-colon separated list. Default (disabled): ''
+#
 # [*ip_version*]
 #   Ip version for the agent to run with. Can be either 'ipv4' or 'ipv6'.
 #   Default: 'ipv4'
@@ -58,19 +61,20 @@
 # Copyright © 2013 ThousandEyes, Inc.
 #
 class teagent(
-  $browserbot = 'UNSET',
-  $agent_utils = 'UNSET',
+  $browserbot          = 'UNSET',
+  $agent_utils         = 'UNSET',
   $international_langs = 'UNSET',
-  $account_token = 'UNSET',
-  $log_path = 'UNSET',
-  $log_file_size = 'UNSET',
-  $proxy_host = 'UNSET',
-  $proxy_port = 'UNSET',
-  $proxy_user = 'UNSET',
-  $proxy_pass = 'UNSET',
-  $ip_version = 'UNSET',
-  $interface = 'UNSET',
-  $set_repo = 'UNSET',
+  $account_token       = 'UNSET',
+  $log_path            = 'UNSET',
+  $log_file_size       = 'UNSET',
+  $proxy_host          = 'UNSET',
+  $proxy_port          = 'UNSET',
+  $proxy_user          = 'UNSET',
+  $proxy_pass          = 'UNSET',
+  $proxy_bypass_list   = 'UNSET',
+  $ip_version          = 'UNSET',
+  $interface           = 'UNSET',
+  $set_repo            = 'UNSET',
 ) {
 
   #we want the module to be fully compatible with all Puppet 2.6.x versions
@@ -124,6 +128,11 @@ class teagent(
   $real_proxy_pass = $proxy_pass ? {
     'UNSET' => $::teagent::params::proxy_pass,
     default => $proxy_pass,
+  }
+
+  $real_proxy_bypass_list = $proxy_bypass_listpass ? {
+    'UNSET' => $::teagent::params::proxy_bypass_list,
+    default => $proxy_bypass_list,
   }
 
   $real_ip_version = $ip_version ? {
