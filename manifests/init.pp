@@ -130,7 +130,7 @@ class teagent(
     default => $proxy_pass,
   }
 
-  $real_proxy_bypass_list = $proxy_bypass_listpass ? {
+  $real_proxy_bypass_list = $proxy_bypass_list ? {
     'UNSET' => $::teagent::params::proxy_bypass_list,
     default => $proxy_bypass_list,
   }
