@@ -21,7 +21,7 @@ class teagent::service {
         $restart = '/usr/bin/systemctl restart te-agent' # This will work even if te-agent is stopped.
         $status = '/usr/bin/systemctl status te-agent'
       }
-      elsif ($::lsbdistcodename == 'xenial') and ($::operatingsystemrelease == '16.04') {
+      elsif $::lsbdistcodename == 'xenial' {
         # systemd
         $start = '/bin/systemctl start te-agent'
         $stop = '/bin/systemctl stop te-agent'
