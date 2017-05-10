@@ -30,13 +30,13 @@ class teagent::dependency {
     }
     ubuntu: {
       case $::lsbdistcodename {
-        precise, trusty: {
+        precise, trusty, xenial: {
           # the OS check passed, install the repo
           package { 'lsb-release': ensure => 'installed' }
           class { 'teagent::repository': require => Package['lsb-release'] }
         }
         default: {
-          fail('Only Ubuntu 12.04 (precise) and 14.04 (trusty) are supported. Please contact support.')
+          fail('Only Ubuntu 12.04 (precise), 14.04 (trusty) and 16.04 (xenial) are supported. Please contact support.')
         }
       }
     }
