@@ -96,6 +96,7 @@ ThousandEyes Enterprise Agent.
 
  4. Execute puppet by issuing this command ```puppet apply -t --modulepath path_to_module path_to_manifest```.
 
+ 5. Agents will start running and will show up in the ThousandEyes Enterprise Agent list.
 
 ## License
 This program is free software: you can redistribute it and/or modify  
