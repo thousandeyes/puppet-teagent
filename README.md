@@ -2,13 +2,21 @@
 
 This is a Puppet module for the ThousandEyes Enterprise Agent.  
 
+
+Platform
+--------
+- Ubuntu 14.04(trusty) and 16.04 (xenial)
+- CentOS >=6.3
+- Red Hat >=6.3
+
+
 ## Usage
 Below are several use cases with different install options for the  
 ThousandEyes Enterprise Agent.
 
  * Default settings
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token => 'your_account_token_goes_here',
  }
  ```
@@ -16,7 +24,7 @@ ThousandEyes Enterprise Agent.
  * Enable browserbot
 
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token => 'your_account_token_goes_here',
      browserbot    => true,
  }
@@ -30,11 +38,11 @@ ThousandEyes Enterprise Agent.
      agent_utils   => true,
  }
  ```
-     
+
  * Enable browserbot and install the international language packages
 
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token       => 'your_account_token_goes_here',
      browserbot          => true,
      international_langs => true,
@@ -42,18 +50,18 @@ ThousandEyes Enterprise Agent.
  ```
 
  * Set the log path location
- 
+
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token => 'your_account_token_goes_here',
      log_path   => '/var/log',
  }
  ```
 
  * Set the proxy (http proxy, no auth)
- 
+
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token => 'your_account_token_goes_here',
      proxy_host    => 'proxy.example.com',
      proxy_port    => '8080',
@@ -61,9 +69,9 @@ ThousandEyes Enterprise Agent.
  ```
 
  * Set the ThousandEyes Enterprise Agent to run with an IPv6 address
- 
+
  ```
- class { 'teagent': 
+ class { 'teagent':
      account_token => 'your_account_token_goes_here',
      ip_version    => 'ipv6',
  }
@@ -74,9 +82,20 @@ ThousandEyes Enterprise Agent.
  ```
  class { 'teagent':
      account_token => 'your_account_token_goes_here',
-     set_repo      => false, 
+     set_repo      => false,
  }
  ```
+### Example
+
+ Steps to run the chef Enterprise Agent:
+ 1. Clone the repository.
+
+ 2. Rename the folder to **teagent**.
+
+ 3. Create a manifest file with a valid token as explained in the *Usage* section.
+
+ 4. Execute puppet by issuing this command ```puppet apply -t --modulepath path_to_module path_to_manifest```.
+
 
 ## License
 This program is free software: you can redistribute it and/or modify  
