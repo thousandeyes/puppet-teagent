@@ -18,16 +18,6 @@ class teagent::dependency {
         fail("Please upgrade your operating system to ${::operatingsystem} to 6.3 or newer.")
       }
     }
-    debian: {
-      # Debian may come without lsb-release, so release codename is unreliable.
-      if ($::operatingsystemrelease =~ /(^6|^7)/) {
-          package { 'lsb-release': ensure => 'installed' }
-          class { 'teagent::repository': require => Package['lsb-release'] }
-      }
-      else {
-          fail('Only Debian 7 (wheezy 7.x) is supported. Please contact support.')
-      }
-    }
     ubuntu: {
       case $::lsbdistcodename {
         trusty, xenial: {
