@@ -1,8 +1,0 @@
-name    'thousandeyes-teagent'
-version '0.0.1'
-source 'git://github.com/thousandeyes/puppet-teagent'
-author 'thousandeyes'
-license 'GPLv3'
-summary 'ThousandEyes agent Module'
-description 'Puppet Module for the ThousandEyes agent'
-project_page 'https://github.com/thousandeyes/puppet-teagent'

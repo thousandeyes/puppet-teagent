@@ -1,4 +1,4 @@
-# Puppet module: teagent
+# Puppet module: te_agent
 
 This is a Puppet module for the ThousandEyes Enterprise Agent.  
 
@@ -6,97 +6,166 @@ This is a Puppet module for the ThousandEyes Enterprise Agent.
 Platform
 --------
 - Ubuntu 14.04(trusty) and 16.04 (xenial)
-- CentOS >=6.3
-- Red Hat >=6.3
+- CentOS/RedHat >=6.3
 
+**Note:** This module needs Puppet 4 or Puppet 5.
 
 ## Usage
+Clone the repository into a `te_agent` folder.
+
 Below are several use cases with different install options for the  
 ThousandEyes Enterprise Agent.
 
+
  * Default settings
  ```
- class { 'teagent':
+ class { 'te_agent':
      account_token => 'your_account_token_goes_here',
- }
- ```
-
- * Enable browserbot
-
- ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     browserbot    => true,
- }
- ```
-
-* Install the ThousandEyes Agent Utilities
-
- ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     agent_utils   => true,
- }
- ```
-
- * Enable browserbot and install the international language packages
-
- ```
- class { 'teagent':
-     account_token       => 'your_account_token_goes_here',
-     browserbot          => true,
-     international_langs => true,
- }
- ```
-
- * Set the log path location
-
- ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     log_path   => '/var/log',
  }
  ```
 
  * Set the proxy (http proxy, no auth)
 
  ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     proxy_host    => 'proxy.example.com',
-     proxy_port    => '8080',
+ class { 'te_agent':
+     account_token  => 'your_account_token_goes_here',
+     proxy_location => 'proxy.example.com:7070',
+     proxy_type     => 'PAC',
  }
  ```
 
- * Set the ThousandEyes Enterprise Agent to run with an IPv6 address
 
- ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     ip_version    => 'ipv6',
- }
- ```
+Attributes
+----------
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+    <th>Possible values</th>
+  </tr>
+  <tr>
+    <td><tt>account_token</tt></td>
+    <td>String</td>
+    <td>Account token for the agent</td>
+    <td><tt>'account_token' (Sample value)</tt></td>
+  </tr>
+  <tr>
+    <td><tt>agent</tt></td>
+    <td>Boolean</td>
+    <td>Installs or removes the te-agent package</td>
+    <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>agent_service_enable</tt></td>
+    <td>Boolean</td>
+    <td>Enables or disables the te-agent service</td>
+    <td><tt> *equals agent parameter value* </tt></td>
+  </tr>
+  <tr>
+    <td><tt>agent_utils</tt></td>
+    <td>Boolean</td>
+    <td>Installs or removes the agent utilities</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>browserbot</tt></td>
+    <td>Boolean</td>
+    <td>Installs or removes Browserbot</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>crash_reports</tt></td>
+    <td>Integer</td>
+    <td>Enables or disables crash reports</td>
+    <td><tt>1</tt></td>
+    <td><tt>0, 1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>international_langs</tt></td>
+    <td>Boolean</td>
+    <td>Installs or removes the language package</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>log_file_size</tt></td>
+    <td>Integer</td>
+    <td>Log file size (MB)</td>
+    <td><tt>10</tt></td>
+  </tr>
+  <tr>
+    <td><tt>log_level</tt></td>
+    <td>String</td>
+    <td>Log level</td>
+    <td><tt>'DEBUG'</tt></td>
+    <td><tt>'DEBUG','TRACE'</tt></td>
+  </tr>
+  <tr>
+    <td><tt>log_path</tt></td>
+    <td>String</td>
+    <td>Agent log path</td>
+    <td><tt>'/var/log'</tt></td>
+  </tr>
+  <tr>
+    <td><tt>num_log_files</tt></td>
+    <td>Integer</td>
+    <td>Amount of log files.</td>
+    <td><tt>13</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_auth_type</tt></td>
+    <td>String</td>
+    <td>Proxy authentication type</td>
+    <td><tt>-</tt></td>
+    <td><tt>'BASIC','KERBEROS','NTLM'</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_bypass_list</tt></td>
+    <td>String</td>
+    <td>Proxy bypass list (Comma separated values)</td>
+    <td><tt>-</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_location</tt></td>
+    <td>String</td>
+    <td>Proxy location (IP:PORT)</td>
+    <td><tt>-</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_pass</tt></td>
+    <td>String</td>
+    <td>Proxy password</td>
+    <td><tt>-</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_type</tt></td>
+    <td>String</td>
+    <td>Proxy type</td>
+    <td><tt>'DIRECT'</tt></td>
+    <td><tt>'DIRECT','STATIC','PAC'</tt></td>
+  </tr>
+  <tr>
+    <td><tt>proxy_user</tt></td>
+    <td>String</td>
+    <td>Proxy username</td>
+    <td><tt>-</tt></td>
+  </tr>
+  <tr>
+    <td><tt>set_repository</tt></td>
+    <td>Boolean</td>
+    <td>Includes or not the ThousandEyes repository</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
 
-* Don't check the dependencies and don't add the ThousandEyes repository
 
- ```
- class { 'teagent':
-     account_token => 'your_account_token_goes_here',
-     set_repo      => false,
- }
- ```
+
 ### Example
 
- Steps to run the chef Enterprise Agent:
- 1. Clone the repository.
+Execute the following command to use the provided example manifest:
 
- 2. Rename the folder to **teagent**.
-
- 3. Create a manifest file with a valid token as explained in the *Usage* section.
-
- 4. Execute puppet by issuing this command ```puppet apply -t --modulepath path_to_module path_to_manifest```.
-
- 5. Agents will start running and will show up in the ThousandEyes Enterprise Agent list.
+```puppet apply --modulepath path_to_module examples/init.pp```
 
 ## License
 This program is free software: you can redistribute it and/or modify  

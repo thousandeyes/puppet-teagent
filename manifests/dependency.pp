@@ -1,37 +1,33 @@
-# == Class: teagent::dependency
-# Copyright © 2013 ThousandEyes, Inc.
+# == Class: te_agent::dependency
+#
+# Checks for required dependencies.
 #
 # === Copyright
 #
-# Copyright © 2013 ThousandEyes, Inc.
+# Copyright © 2017 ThousandEyes, Inc.
 #
-class teagent::dependency {
-  ### check if the OS is supported
-  case $::operatingsystem {
-    centos, redhat: {
-      # 6.3 or 7.x, this is a string so we have to use regex.
-      if ($::operatingsystemrelease =~ /(^6.[3-9]|^7)/) {
-        # the OS check passed, install the repo
-        include teagent::repository
-      }
-      else {
-        fail("Please upgrade your operating system to ${::operatingsystem} to 6.3 or newer.")
-      }
-    }
-    ubuntu: {
-      case $::lsbdistcodename {
-        trusty, xenial: {
-          # the OS check passed, install the repo
-          package { 'lsb-release': ensure => 'installed' }
-          class { 'teagent::repository': require => Package['lsb-release'] }
-        }
-        default: {
-          fail('Only Ubuntu 14.04 (trusty) and 16.04 (xenial) are supported. Please contact support.')
-        }
+class te_agent::dependency{
+
+  $os_family   = $facts['os']['family']
+  $os_release  = $facts['os']['release']['full']
+
+  case $os_family {
+
+    'RedHat': {
+      if (versioncmp($os_release,'6.3') <= 0 ) {
+        fail("Please upgrade your operating system ${os_family} ${os_release} to version 6.3 or newer.")
       }
     }
+
+    'Debian': {
+      if !($os_release == '14.04' or $os_release == '16.04') {
+        fail('Only Ubuntu 14.04 (trusty) and 16.04 (xenial) are supported. Please contact support.')
+      }
+    }
+
     default: {
-      fail("Operating system ${::operatingsystem} ${::operatingsystemrelease} isn't supported.")
+      fail("Operating system ${os_family} ${os_release} is not supported.")
     }
   }
+
 }
