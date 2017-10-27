@@ -1,0 +1,30 @@
+{
+  "name": "thousandeyes-te_agent",
+  "version": "1.0.0",
+  "author": "ThousandEyes",
+  "summary": "Installs, configures, and manages the ThousandEyes agent.",
+  "license": "GPLv3",
+  "source": "git://github.com/thousandeyes/puppet-teagent",
+  "project_page": "https://github.com/thousandeyes/puppet-teagent",
+  "dependencies": [],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease": ">= 6.3"
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [
+      "14.04",
+      "16.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.0.0 "
+    }
+  ],
+  "description": "ThousandEyes agent module for Ubuntu, CentOS, RHEL."
+}
