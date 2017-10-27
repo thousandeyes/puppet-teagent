@@ -8,11 +8,6 @@
 #
 class te_agent::service {
 
-  $te_agent_service_ensure = $te_agent::te_agent ? {
-    true  => 'running',
-    false => 'stopped',
-  }
-
   # Addresses issue to fetch init system on RedHat < 7 versions.
   if ($facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['full'],'7') < 0 ) {
     Service {
@@ -20,9 +15,19 @@ class te_agent::service {
     }
   }
 
+  $te_agent_service_ensure = $te_agent::agent ? {
+    true  => 'running',
+    false => 'stopped',
+  }
+
+  $te_agent_service_enable = $te_agent::agent_service_enable ? {
+    undef   => $te_agent::agent,
+    default => $te_agent::agent_service_enable,
+  }
+
   service { 'te-agent':
     ensure     => $te_agent_service_ensure,
-    enable     => $te_agent::te_agent,
+    enable     => $te_agent_service_enable,
     hasrestart => true,
     hasstatus  => true,
     require    => [Package['te-agent'],File['/etc/te-agent.cfg']],

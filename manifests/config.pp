@@ -8,7 +8,7 @@
 #
 class te_agent::config {
 
-  $te_agent_file_ensure = $te_agent::te_agent ? {
+  $te_agent_file_ensure = $te_agent::agent ? {
     true  => present,
     false => absent,
   }

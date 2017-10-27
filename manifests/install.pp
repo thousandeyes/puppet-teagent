@@ -8,7 +8,7 @@
 #
 class te_agent::install {
 
-  $te_agent_package_ensure = $te_agent::te_agent ? {
+  $te_agent_package_ensure = $te_agent::agent ? {
     true  => 'installed',
     false => 'purged',
   }

@@ -6,6 +6,7 @@
   "license": "GPLv3",
   "source": "git://github.com/thousandeyes/puppet-teagent",
   "project_page": "https://github.com/thousandeyes/puppet-teagent",
+  "dependencies": [],
   "operatingsystem_support": [
     {
     "operatingsystem":"RedHat",

@@ -56,10 +56,15 @@
 #   Account token for the agent.
 #   Default: 'account_token' (Sample value)
 #
-# [*te_agent*]
-#  Handles the ThosuandEyes agent package.
+# [*agent*]
+#  Handles the ThousandEyes agent package.
 #  Possible values: true ('installed'), false ('purged').
 #  Default: true.
+#
+# [*agent_service_enable*]
+#  Enables or not the te-agent service.
+#  Possible values: true, false,undef (If left undefined it will equal the agent parameter value).
+#  Default: undef.
 #
 # [*international_langs*]
 #  Handles the international language package.
@@ -110,7 +115,8 @@ Integer[0] $num_log_files = 13,
 Integer[0,1] $crash_reports = 1,
 String $log_path = '/var/log',
 String $account_token = 'account_token',
-Boolean $te_agent = true,
+Boolean $agent = true,
+Optional[Boolean] $agent_service_enable = undef,
 Boolean $international_langs = false,
 Boolean $agent_utils = false,
 Boolean $browserbot = false,

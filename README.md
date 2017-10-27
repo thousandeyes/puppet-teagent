@@ -27,10 +27,16 @@ Attributes
     <th>Possible values</th>
   </tr>
   <tr>
-    <td><tt>te_agent</tt></td>
+    <td><tt>agent</tt></td>
     <td>Boolean</td>
-    <td>Installs or removes the ThousandEyes agent</td>
+    <td>Installs or removes the te-agent package</td>
     <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>agent_service_enable</tt></td>
+    <td>Boolean</td>
+    <td>Enables or disables the te-agent service</td>
+    <td><tt>*equals agent parameter value*</tt></td>
   </tr>
   <tr>
     <td><tt>browserbot</tt></td>
