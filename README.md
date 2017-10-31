@@ -89,7 +89,7 @@ ThousandEyes Enterprise Agent.
  ```
 ### Example
 
- Steps to run the chef Enterprise Agent:
+ Steps to run the puppet Enterprise Agent:
  1. Clone the repository.
 
  2. Rename the folder to **teagent**.
