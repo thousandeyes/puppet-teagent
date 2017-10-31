@@ -9,6 +9,8 @@ Platform
 - CentOS >=6.3
 - Red Hat >=6.3
 
+**Note:** This module works with Puppet version 3.7.*
+
 
 ## Usage
 Below are several use cases with different install options for the  
