@@ -8,7 +8,7 @@ Platform
 - Ubuntu 14.04(trusty) and 16.04 (xenial)
 - CentOS/RedHat >=6.3
 
-**Note:** This module needs Puppet 4 or Puppet 5.
+**Note:** This module needs Puppet 4 or Puppet 5. If you want the version for Puppet 3.7, check `puppet3.7` tag
 
 ## Usage
 Clone the repository into a `te_agent` folder.
