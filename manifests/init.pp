@@ -1,208 +1,132 @@
-# == Class: teagent
+# == Class: te_agent
 #
 # Puppet module for the ThousandEyes agent.
 #
 # === Parameters
 #
-# [*browserbot*]
-#   Set to 'true' to enable BrowserBot.
-#   Default: false
-#
-# [*agent_utils*]
-#   Set to 'true' to install the ThousandEyes Agent Utilities.
-#   Default: false
-#
-# [*international_langs*]
-#   Set to 'true' to install the international language support package.
-#   Default: false
-#
 # [*account_token*]
 #   Account token for the agent.
-#   Default is the sample value, which equals a disabled agent.
+#   Default: 'account_token' (Sample value)
+#
+# [*agent*]
+#  Handles the ThousandEyes agent package.
+#  Possible values: true ('installed'), false ('purged').
+#  Default: true.
+#
+# [*agent_service_enable*]
+#  Enables or not the te-agent service.
+#  Possible values: true, false,undef (If left undefined it will equal the agent parameter value).
+#  Default: undef.
+#
+# [*agent_utils*]
+#  Handles instalation of the agent utils package.
+#  Possible values: true ('installed'), false ('purged').
+#  Default: false.
+#
+# [*browserbot*]
+#  Handles the browserbot package.
+#  Possible values: true ('installed'), false ('purged').
+#  Default: false.
+#
+# [*crash_reports*]
+#   Agent crash reports.
+#   Possible values: 0 (disabled), 1 (enabled).
+#   Default: 1
+#
+# [*international_langs*]
+#  Handles the international language package.
+#  Possible values: true ('installed'), false ('purged').
+#  Default: false.
+#
+# [*log_file_size*]
+#   Agent log file size in MB.
+#   Default: 10
+#
+# [*log_level*]
+#   Agent log level.
+#   Possible values are: 'DEBUG', 'TRACE'
+#   Default: 'DEBUG'
 #
 # [*log_path*]
-#   Agent log path. Default: /var/log
+#   Agent log path.
+#   Default: '/var/log'
 #
-# [*proxy_host*]
-#   Proxy hostname. Default (disabled): ''
+# [*num_log_files*]
+#   Amount of agent's log files.
+#   Default: 13
 #
-# [*proxy_port*]
-#   Proxy port. Default (disabled): 0
-#
-# [*proxy_user*]
-#   Proxy username. Default (disabled): ''
-#
-# [*proxy_pass*]
-#   Proxy password. Default (disabled): ''
+# [*proxy_auth_type*]
+#   Proxy authentication type.
+#   Possible values: 'BASIC','KERBEROS','NTLM'.
+#   Default: (disabled)
 #
 # [*proxy_bypass_list*]
-#   Proxy bypass list. Semi-colon separated list. Default (disabled): ''
+#   Proxy bypass list. Comma separated value.
+#   Default: (disabled)
 #
-# [*ip_version*]
-#   Ip version for the agent to run with. Can be either 'ipv4' or 'ipv6'.
-#   Default: 'ipv4'
+# [*proxy_location*]
+#   Proxy location.
+#   Default: (disabled)
 #
-# [*set_repo*]
-#   If set to false doesn't try to check depdendencies and install the repo.
-#   Default: true
+# [*proxy_pass*]
+#   Proxy password.
+#   Default: (disabled)
+#
+# [*proxy_type*]
+#   Proxy type.
+#   Possible values: 'DIRECT','STATIC','PAC'.
+#   Default: 'DIRECT' (No proxy enabled).
+#
+# [*proxy_user*]
+#   Proxy username.
+#   Default: (disabled)
+#
+# [*set_repository*]
+#  Handles or not the ThousandEyes repository installation.
+#  Possible values: true, false.
+#  Default: true.
 #
 # === Examples
 #
-# Call teagent as a parameterized class
+# Call te_agent as a parameterized class
 #
 # See README for details.
 #
 # === Authors
 #
+# Gaston Bezzi <gaston@thousandeyes.com>
 # Paulo Cabido <paulo@thousandeyes.com>
 #
 # === Copyright
 #
-# Copyright © 2013 ThousandEyes, Inc.
+# Copyright © 2017 ThousandEyes, Inc.
 #
-class teagent(
-  $browserbot          = 'UNSET',
-  $agent_utils         = 'UNSET',
-  $international_langs = 'UNSET',
-  $account_token       = 'UNSET',
-  $log_path            = 'UNSET',
-  $log_file_size       = 'UNSET',
-  $proxy_host          = 'UNSET',
-  $proxy_port          = 'UNSET',
-  $proxy_user          = 'UNSET',
-  $proxy_pass          = 'UNSET',
-  $proxy_bypass_list   = 'UNSET',
-  $ip_version          = 'UNSET',
-  $interface           = 'UNSET',
-  $set_repo            = 'UNSET',
-) {
 
-  #we want the module to be fully compatible with all Puppet 2.6.x versions
-  include teagent::params
+class te_agent(
+  String $account_token                                      = 'account_token',
+  Boolean $agent                                             = true,
+  Optional[Boolean] $agent_service_enable                    = undef,
+  Boolean $agent_utils                                       = false,
+  Boolean $browserbot                                        = false,
+  Integer[0,1] $crash_reports                                = 1,
+  Boolean $international_langs                               = false,
+  Integer[0] $log_file_size                                  = 10,
+  Enum['DEBUG','TRACE'] $log_level                           = 'DEBUG',
+  String $log_path                                           = '/var/log',
+  Integer[0] $num_log_files                                  = 13,
+  Optional[Enum['BASIC','KERBEROS','NTLM']] $proxy_auth_type = undef,
+  Optional[String] $proxy_bypass_list                        = undef,
+  Optional[String] $proxy_location                           = undef,
+  Optional[String] $proxy_pass                               = undef,
+  Enum['DIRECT','STATIC','PAC'] $proxy_type                  = 'DIRECT',
+  Optional[String] $proxy_user                               = undef,
+  Boolean $set_repository                                    = true,
+){
 
-  $real_browserbot = $browserbot ? {
-    'UNSET' => $::teagent::params::browserbot,
-    default => $browserbot,
-  }
+  class { 'te_agent::dependency': }
+  -> class { 'te_agent::repository':}
+  -> class { 'te_agent::install': }
+  -> class { 'te_agent::config': }
+  ~> class { 'te_agent::service': }
 
-  $real_agent_utils = $agent_utils ? {
-    'UNSET' => $::teagent::params::agent_utils,
-    default => $agent_utils,
-  }
-
-  $real_international_langs = $international_langs ? {
-    'UNSET' => $::teagent::params::international_langs,
-    default => $international_langs,
-  }
-
-  $real_account_token = $account_token ? {
-    'UNSET' => $::teagent::params::account_token,
-    default => $account_token,
-  }
-
-  $real_log_path = $log_path ? {
-    'UNSET' => $::teagent::params::log_path,
-    default => $log_path,
-  }
-
-  $real_log_file_size = $log_file_size ? {
-    'UNSET' => $::teagent::params::log_file_size,
-    default => $log_file_size,
-  }
-
-  $real_proxy_host = $proxy_host ? {
-    'UNSET' => $::teagent::params::proxy_host,
-    default => $proxy_host,
-  }
-
-  $real_proxy_port = $proxy_port ? {
-    'UNSET' => $::teagent::params::proxy_port,
-    default => $proxy_port,
-  }
-
-  $real_proxy_user = $proxy_user ? {
-    'UNSET' => $::teagent::params::proxy_user,
-    default => $proxy_user,
-  }
-
-  $real_proxy_pass = $proxy_pass ? {
-    'UNSET' => $::teagent::params::proxy_pass,
-    default => $proxy_pass,
-  }
-
-  $real_proxy_bypass_list = $proxy_bypass_list ? {
-    'UNSET' => $::teagent::params::proxy_bypass_list,
-    default => $proxy_bypass_list,
-  }
-
-  $real_ip_version = $ip_version ? {
-    'UNSET' => $::teagent::params::ip_version,
-    default => $ip_version,
-  }
-
-  $real_interface = $interface ? {
-    'UNSET' => $::teagent::params::interface,
-    default => $interface,
-  }
-
-  $real_set_repo = $set_repo ? {
-    'UNSET' => $::teagent::params::set_repo,
-    default => $set_repo,
-  }
-
-  # this takes care of the dependencies (repos) if set to true
-  if ($real_set_repo) {
-    include teagent::dependency
-    $teagent_requires = [
-      Class['teagent::dependency'],
-      Class['teagent::repository'],
-    ]
-  }
-  else {
-    $teagent_requires = []
-  }
-
-  package { 'te-agent':
-    ensure  => 'installed',
-    require => $teagent_requires,
-  }
-
-  if $real_browserbot {
-    package { 'te-browserbot':
-      ensure  => 'installed',
-      require => Package['te-agent'],
-    }
-  }
-
-  if $real_agent_utils {
-    package { 'te-agent-utils':
-      ensure  => 'latest',
-      require => Package['te-agent'],
-    }
-  }
-
-  if $real_international_langs {
-    package { 'te-intl-fonts':
-      ensure  => 'latest',
-      require => [
-        Class['teagent::dependency'],
-        Class['teagent::repository'],
-      ],
-    }
-  }
-
-  file { '/var/lib/te-agent/config_teagent.sh':
-    ensure  => 'present',
-    content => template('teagent/config_teagent.sh.erb'),
-    mode    => '0755',
-    require => [ Package['te-agent'], ],
-  }
-
-  exec { '/var/lib/te-agent/config_teagent.sh':
-    subscribe   => File['/var/lib/te-agent/config_teagent.sh'],
-    refreshonly => true,
-  }
-
-  # te-agent service
-  include teagent::service
 }

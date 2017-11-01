@@ -1,89 +1,56 @@
-
 # == Class: teagent::repository
-# Copyright © 2013 ThousandEyes, Inc.
+#
+# Manages the ThousandEyes repository.
 #
 # === Copyright
 #
-# Copyright © 2013 ThousandEyes, Inc.
+# Copyright © 2017 ThousandEyes, Inc.
 #
-class teagent::repository {
-  ### repository settings
+class te_agent::repository {
 
+  if $te_agent::set_repository == true {
 
-  ## This is for CentOS/RedHat
-  $osrel = split($::operatingsystemrelease, '\.')
-  $osmajrel = $osrel[0]
-  ##
-  $repo_os = $::operatingsystem ? {
-    /(?i-mx:centos)/ => 'CentOS',
-    /(?i-mx:redhat)/ => 'RHEL',
-    default          => 'UNSET',
-  }
+    $os_family = $facts['os']['family']
 
-  $repo_file = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => 'thousandeyes.list',
-    /(?i-mx:centos|redhat)/ => 'thousandeyes.repo',
-    default                 => 'UNSET',
-  }
+    case $os_family {
 
-  $repo_path = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => "/etc/apt/sources.list.d/${repo_file}",
-    /(?i-mx:centos|redhat)/ => "/etc/yum.repos.d/${repo_file}",
-    default                 => 'UNSET',
-  }
+      'RedHat': {
+        $os_name = $facts['os']['name']
+        $os_maj_release = $facts['os']['release']['major']
+        $architecture = $facts['os']['architecture']
 
-  $pub_key = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => 'thousandeyes-apt-key.pub',
-    /(?i-mx:centos|redhat)/ => 'RPM-GPG-KEY-thousandeyes',
-    default                 => 'UNSET',
-  }
+        yumrepo { 'thousandeyes.repo':
+          ensure   => present,
+          baseurl  => "http://yum.thousandeyes.com/${os_name}/${os_maj_release}/${architecture}",
+          gpgkey   => 'http://yum.thousandeyes.com/RPM-GPG-KEY-thousandeyes',
+          gpgcheck => true,
+        }
+      }
 
-  $pub_key_path = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => "/etc/apt/trusted.gpg.d/${pub_key}",
-    /(?i-mx:centos|redhat)/ => "/etc/pki/rpm-gpg/${pub_key}",
-    default                 => 'UNSET',
-  }
+      'Debian': {
+        $public_key = '/etc/apt/trusted.gpg.d/thousandeyes-apt-key.pub'
+        $repository = '/etc/apt/sources.list.d/thousandeyes.list'
+        $os_codename = $facts['os']['distro']['codename']
 
-  $repo_import_cmd = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => "/usr/bin/apt-key add ${pub_key_path}",
-    /(?i-mx:centos|redhat)/ => "/bin/rpm --import ${pub_key_path}",
-    default                 => 'UNSET',
-  }
+        file { $public_key:
+          ensure => 'present',
+          source => 'puppet:///modules/te_agent/thousandeyes-apt-key.pub',
+        }
+        ~> exec { "/usr/bin/apt-key add ${public_key}":
+            refreshonly => true,
+          }
+        -> file { $repository:
+            ensure  => 'present',
+            content => template('te_agent/thousandeyes.list.erb'),
+          }
+        ~> exec { '/usr/bin/apt-get update':
+            refreshonly => true,
+          }
+      }
 
-  $repo_postinst = $::operatingsystem ? {
-    /(?i-mx:ubuntu)/ => '/usr/bin/apt-get update',
-    /(?i-mx:centos|redhat)/ => '/usr/bin/yum clean all',
-    default                 => 'UNSET',
-  }
-
-  file { $repo_path:
-    ensure  => 'present',
-    content => template("teagent/${repo_file}.erb"),
-  }
-
-  file { $pub_key_path:
-    ensure => 'present',
-    source => "puppet:///modules/teagent/${pub_key}",
-    notify => Exec[$repo_import_cmd],
-  }
-
-  # import the key
-  exec { $repo_import_cmd:
-    subscribe   => File[$pub_key_path],
-    refreshonly => true,
-  }
-
-  exec { 'repo-postinst':
-    command     => $repo_postinst,
-    require     => [
-      File[$repo_path],
-      File[$pub_key_path],
-      Exec[$repo_import_cmd],
-    ],
-    subscribe   => [
-      File[$repo_path],
-      File[$pub_key_path],
-    ],
-    refreshonly => true,
+      default: {
+        fail('Operating system is not supported.')
+      }
+    }
   }
 }
