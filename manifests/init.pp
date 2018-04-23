@@ -129,4 +129,9 @@ class te_agent(
   -> class { 'te_agent::config': }
   ~> class { 'te_agent::service': }
 
+  contain te_agent::dependency
+  contain te_agent::repository
+  contain te_agent::install
+  contain te_agent::config
+  contain te_agent::service
 }
