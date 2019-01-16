@@ -72,6 +72,10 @@
 #   Proxy password.
 #   Default: (disabled)
 #
+# [*cluster_master_host*]
+#   Hostname of the clustermaster.
+#   Default: undef.
+#
 # [*proxy_type*]
 #   Proxy type.
 #   Possible values: 'DIRECT','STATIC','PAC'.
@@ -118,6 +122,7 @@ class te_agent(
   Optional[String] $proxy_bypass_list                        = undef,
   Optional[String] $proxy_location                           = undef,
   Optional[String] $proxy_pass                               = undef,
+  Optional[String] $cluster_master_host                      = undef,
   Enum['DIRECT','STATIC','PAC'] $proxy_type                  = 'DIRECT',
   Optional[String] $proxy_user                               = undef,
   Boolean $set_repository                                    = true,

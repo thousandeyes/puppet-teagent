@@ -10,3 +10,6 @@ proxy-user=<%= scope['te_agent::proxy_user'] %>
 proxy-pass=<%= scope['te_agent::proxy_pass'] %>
 proxy-bypass-list=<%= scope['te_agent::proxy_bypass_list'] %>
 crash-reports=<%= scope['te_agent::crash_reports'] %>
+<%- if scope['te_agent::cluster_master_host'] -%>
+cluster-master-host=<%= scope['te_agent::cluster_master_host'] %>
+<% end %>
