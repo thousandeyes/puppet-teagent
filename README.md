@@ -1,32 +1,32 @@
 # Puppet module: te_agent
 
-This is a Puppet module for the ThousandEyes Enterprise Agent.  
+This Puppet module installs and configures the ThousandEyes Enterprise Agent.  
 
+## Platform
 
-Platform
---------
-- Ubuntu 14.04(trusty) and 16.04 (xenial)
+- Ubuntu 14.04(trusty), 16.04 (xenial) and 18.04 (Bionic)
 - CentOS/RedHat >=6.3
 
-**Note:** This module needs Puppet 4 or Puppet 5. If you want the version for Puppet 3.7, check `puppet3.7` tag
+**Note:** This module needs Puppet 4 or Puppet 5. If you want the version for Puppet 3.7, check the `puppet3.7` tag.
 
 ## Usage
+
 Clone the repository into a `te_agent` folder.
 
 Below are several use cases with different install options for the  
 ThousandEyes Enterprise Agent.
 
+- Default settings
 
- * Default settings
- ```
+ ```pp
  class { 'te_agent':
      account_token => 'your_account_token_goes_here',
  }
  ```
 
- * Set the proxy (http proxy, no auth)
+- Set the proxy (http proxy, no auth)
 
- ```
+ ```pp
  class { 'te_agent':
      account_token  => 'your_account_token_goes_here',
      proxy_location => 'proxy.example.com:7070',
@@ -34,140 +34,37 @@ ThousandEyes Enterprise Agent.
  }
  ```
 
+## Attributes
 
-Attributes
-----------
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-    <th>Possible values</th>
-  </tr>
-  <tr>
-    <td><tt>account_token</tt></td>
-    <td>String</td>
-    <td>Account token for the agent</td>
-    <td><tt>'account_token' (Sample value)</tt></td>
-  </tr>
-  <tr>
-    <td><tt>agent</tt></td>
-    <td>Boolean</td>
-    <td>Installs or removes the te-agent package</td>
-    <td><tt>true</tt></td>
-  </tr>
-  <tr>
-    <td><tt>agent_service_enable</tt></td>
-    <td>Boolean</td>
-    <td>Enables or disables the te-agent service</td>
-    <td><tt> *equals agent parameter value* </tt></td>
-  </tr>
-  <tr>
-    <td><tt>agent_utils</tt></td>
-    <td>Boolean</td>
-    <td>Installs or removes the agent utilities</td>
-    <td><tt>false</tt></td>
-  </tr>
-  <tr>
-    <td><tt>browserbot</tt></td>
-    <td>Boolean</td>
-    <td>Installs or removes Browserbot</td>
-    <td><tt>false</tt></td>
-  </tr>
-  <tr>
-    <td><tt>crash_reports</tt></td>
-    <td>Integer</td>
-    <td>Enables or disables crash reports</td>
-    <td><tt>1</tt></td>
-    <td><tt>0, 1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>international_langs</tt></td>
-    <td>Boolean</td>
-    <td>Installs or removes the language package</td>
-    <td><tt>false</tt></td>
-  </tr>
-  <tr>
-    <td><tt>log_file_size</tt></td>
-    <td>Integer</td>
-    <td>Log file size (MB)</td>
-    <td><tt>10</tt></td>
-  </tr>
-  <tr>
-    <td><tt>log_level</tt></td>
-    <td>String</td>
-    <td>Log level</td>
-    <td><tt>'DEBUG'</tt></td>
-    <td><tt>'DEBUG','TRACE'</tt></td>
-  </tr>
-  <tr>
-    <td><tt>log_path</tt></td>
-    <td>String</td>
-    <td>Agent log path</td>
-    <td><tt>'/var/log'</tt></td>
-  </tr>
-  <tr>
-    <td><tt>num_log_files</tt></td>
-    <td>Integer</td>
-    <td>Amount of log files.</td>
-    <td><tt>13</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_auth_type</tt></td>
-    <td>String</td>
-    <td>Proxy authentication type</td>
-    <td><tt>-</tt></td>
-    <td><tt>'BASIC','KERBEROS','NTLM'</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_bypass_list</tt></td>
-    <td>String</td>
-    <td>Proxy bypass list (Comma separated values)</td>
-    <td><tt>-</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_location</tt></td>
-    <td>String</td>
-    <td>Proxy location (IP:PORT)</td>
-    <td><tt>-</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_pass</tt></td>
-    <td>String</td>
-    <td>Proxy password</td>
-    <td><tt>-</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_type</tt></td>
-    <td>String</td>
-    <td>Proxy type</td>
-    <td><tt>'DIRECT'</tt></td>
-    <td><tt>'DIRECT','STATIC','PAC'</tt></td>
-  </tr>
-  <tr>
-    <td><tt>proxy_user</tt></td>
-    <td>String</td>
-    <td>Proxy username</td>
-    <td><tt>-</tt></td>
-  </tr>
-  <tr>
-    <td><tt>set_repository</tt></td>
-    <td>Boolean</td>
-    <td>Includes or not the ThousandEyes repository</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+|Key|Type|Description|Default|Possible values|
+|--- |--- |--- |--- |--- |
+|account_token|String|Account token for the agent|`'account_token'` (Sample value)|
+|agent|Boolean|Installs or removes the te-agent package|`true`|
+|agent_service_enable|Boolean|Enables or disables the te-agent service|(equals agent parameter value)|
+|agent_utils|Boolean|Installs or removes the agent utilities|`false`|
+|browserbot|Boolean|Installs or removes Browserbot|`false`|
+|crash_reports|Integer|Enables or disables crash reports|`1`|`0`, `1`|
+|international_langs|Boolean|Installs or removes the language package|`false`|
+|log_file_size|Integer|Log file size (MB)|`10`|
+|log_level|String|Log level|`'DEBUG'`|`'DEBUG'`,`'TRACE'`|
+|log_path|String|Agent log path|`'/var/log'`|
+|num_log_files|Integer|Amount of log files|`13`|
+|proxy_auth_type|String|Proxy authentication type||`'BASIC'`,`'KERBEROS'`,`'NTLM'`|
+|proxy_bypass_list|String|Proxy bypass list (Comma separated values)||
+|proxy_location|String|Proxy location (IP:PORT)||
+|proxy_pass|String|Proxy password||
+|proxy_type|String|Proxy type|`'DIRECT'`|`'DIRECT'`,`'STATIC'`,`'PAC'`|
+|proxy_user|String|Proxy username||
+|set_repository|Boolean|Includes or not the ThousandEyes repository|`true`|
 
-
-
-### Example
+## Example
 
 Execute the following command to use the provided example manifest:
 
 ```puppet apply --modulepath path_to_module examples/init.pp```
 
 ## License
+
 This program is free software: you can redistribute it and/or modify  
 it under the terms of the GNU General Public License as published by  
 the Free Software Foundation, either version 3 of the License, or  
@@ -182,10 +79,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Contact
+
 If you have questions or comments, please send them to  
 opensource+puppet@thousandeyes.com, or to the following address:
 
 ThousandEyes, Inc.  
-301 Howard Street #1700  
-San Francisco, CA  94105  
+201 Mission Street, Suite 1700 \
+San Francisco, CA, USA \
+94105 \
 Attn: ThousandEyes Open Source Projects  

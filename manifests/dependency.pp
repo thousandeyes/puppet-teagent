@@ -4,7 +4,7 @@
 #
 # === Copyright
 #
-# Copyright © 2017 ThousandEyes, Inc.
+# Copyright © 2020 ThousandEyes, Inc.
 #
 class te_agent::dependency{
 
@@ -20,8 +20,8 @@ class te_agent::dependency{
     }
 
     'Debian': {
-      if !($os_release == '14.04' or $os_release == '16.04') {
-        fail('Only Ubuntu 14.04 (trusty) and 16.04 (xenial) are supported. Please contact support.')
+      if !($os_release in ['14.04','16.04','18.04']) {
+        fail('Only Ubuntu 14.04 (trusty), 16.04 (xenial) and 18.04 (bionic) are supported. Please contact support.')
       }
     }
 
