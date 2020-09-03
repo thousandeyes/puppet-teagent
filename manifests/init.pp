@@ -113,6 +113,7 @@ class te_agent(
   Optional[Boolean] $agent_service_enable                    = undef,
   Boolean $agent_utils                                       = false,
   Boolean $browserbot                                        = false,
+  Boolean $xvfb                                              = false,
   Integer[0,1] $crash_reports                                = 1,
   Boolean $international_langs                               = false,
   Integer[0] $log_file_size                                  = 10,

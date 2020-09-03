@@ -18,6 +18,11 @@ class te_agent::install {
     false => 'purged',
   }
 
+  $xvfb_package_ensure = $te_agent::xvfb ? {
+    true  => 'installed',
+    false => 'purged',
+  }
+
   $agent_utils_package_ensure = $te_agent::agent_utils ? {
     true  => 'installed',
     false => 'purged',
@@ -34,6 +39,11 @@ class te_agent::install {
 
   package { 'te-browserbot':
     ensure  => $browserbot_package_ensure,
+    require => Package['te-agent'],
+  }
+
+  package { 'te-xvfb':
+    ensure  => $xvfb_package_ensure,
     require => Package['te-agent'],
   }
 
