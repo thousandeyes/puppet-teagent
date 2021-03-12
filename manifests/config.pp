@@ -17,7 +17,7 @@ class te_agent::config {
     ensure  => $te_agent_file_ensure,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0600',
     content => template('te_agent/te-agent.cfg.erb'),
   }
 }
