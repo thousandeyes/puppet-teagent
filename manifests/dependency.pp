@@ -20,8 +20,8 @@ class te_agent::dependency{
     }
 
     'Debian': {
-      if !($os_release in ['14.04','16.04','18.04']) {
-        fail('Only Ubuntu 14.04 (trusty), 16.04 (xenial) and 18.04 (bionic) are supported. Please contact support.')
+      if !($os_release in ['16.04','18.04', '20.04']) {
+        fail('Only Ubuntu 16.04 (xenial), 18.04 (bionic), and 20.04 (focal) are supported. Please contact support.')
       }
     }
 
