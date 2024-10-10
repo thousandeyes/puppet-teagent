@@ -7,7 +7,7 @@ This Puppet module installs and configures the ThousandEyes Enterprise Agent.
 - Ubuntu 16.04 (xenial), 18.04 (bionic), 20.04 (focal) and 22.04 (jammy)
 - CentOS/RedHat 7, 8 and 9
 
-**Note:** This module needs Puppet 4.x or 5.x. If you want the version for Puppet 3.7, check the `puppet3.7` tag.
+**Note:** This module needs Puppet >= 4. If you want the version for Puppet 3.7, check the `puppet3.7` tag.
 
 ## Usage
 
