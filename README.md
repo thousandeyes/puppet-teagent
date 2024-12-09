@@ -34,6 +34,30 @@ ThousandEyes Enterprise Agent.
  }
  ```
 
+- Set Browserbot memory limit for Chrome container
+
+ ```pp
+ class { 'te_agent':
+     account_token  => 'your_account_token_goes_here',
+     bbot_params    => {
+       podman => {
+         containerResourceLimitsChrome => {
+           memoryLimitBytes => 2362232012,
+         },
+       },
+     },
+ }
+ ```
+
+and the equivalent in Hiera:
+ ```yaml
+ te_agent::account_token: 'your_account_token_goes_here'
+ te_agent::bbot_params:
+   podman:
+     containerResourceLimitsChrome:
+       memoryLimitBytes: 2362232012
+ ```
+
 ## Attributes
 
 |Key|Type|Description|Default|Possible values|
@@ -56,6 +80,7 @@ ThousandEyes Enterprise Agent.
 |proxy_type|String|Proxy type|`'DIRECT'`|`'DIRECT'`,`'STATIC'`,`'PAC'`|
 |proxy_user|String|Proxy username||
 |set_repository|Boolean|Includes or not the ThousandEyes repository|`true`|
+|bbot_params|Hash|Browserbot parameters||Please check [manifests/init.pp](manifests/init.pp#L93-L233) header for more details|
 
 ## Example
 
