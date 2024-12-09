@@ -1,0 +1,154 @@
+orchestrator:
+<% if defined?(@bbot_params) -%>
+<% if defined?(@bbot_params['server']) -%>
+
+  server:
+<% if defined?(@bbot_params['server']['port']) && !@bbot_params['server']['port'].nil? -%>
+    port: <%= @bbot_params['server']['port'] %>
+<% end -%>
+<% end -%>
+<% if defined?(@bbot_params['log']) -%>
+
+  log:
+<% if defined?(@bbot_params['log']['logFilePath']) && !@bbot_params['log']['logFilePath'].nil? -%>
+    logFilePath: <%= @bbot_params['log']['logFilePath'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['warnLogFilePath']) && !@bbot_params['log']['warnLogFilePath'].nil? -%>
+    warnLogFilePath: <%= @bbot_params['log']['warnLogFilePath'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['containerLogFilePath']) && !@bbot_params['log']['containerLogFilePath'].nil? -%>
+    containerLogFilePath: <%= @bbot_params['log']['containerLogFilePath'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['level']) && !@bbot_params['log']['level'].nil? -%>
+    level: <%= @bbot_params['log']['level'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['maxSizeMB']) && !@bbot_params['log']['maxSizeMB'].nil? -%>
+    maxsizemb: <%= @bbot_params['log']['maxSizeMB'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['maxAgeDays']) && !@bbot_params['log']['maxAgeDays'].nil? -%>
+    maxagedays: <%= @bbot_params['log']['maxAgeDays'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['maxBackups']) && !@bbot_params['log']['maxBackups'].nil? -%>
+    maxbackups: <%= @bbot_params['log']['maxBackups'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['enableChromeDriverVerboseLogging']) &&
+      !@bbot_params['log']['enableChromeDriverVerboseLogging'].nil? -%>
+    enableChromeDriverVerboseLogging: <%= @bbot_params['log']['enableChromeDriverVerboseLogging'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['collectNetLogData']) && !@bbot_params['log']['collectNetLogData'].nil? -%>
+    collectNetLogData: <%= @bbot_params['log']['collectNetLogData'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['enableTLSKeysLogging']) && !@bbot_params['log']['enableTLSKeysLogging'].nil? -%>
+    enableTLSKeysLogging: <%= @bbot_params['log']['enableTLSKeysLogging'] %>
+<% end -%>
+<% if defined?(@bbot_params['log']['tlsKeysLogFilePath']) && !@bbot_params['log']['tlsKeysLogFilePath'].nil? -%>
+    tlsKeysLogFilePath: <%= @bbot_params['log']['tlsKeysLogFilePath'] %>
+<% end -%>
+<% end -%>
+<% if defined?(@bbot_params['test']) -%>
+
+  test:
+<% if defined?(@bbot_params['test']['screenshotDir']) && !@bbot_params['test']['screenshotDir'].nil? -%>
+    screenshotDir: <%= @bbot_params['test']['screenshotDir'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['harDir']) && !@bbot_params['test']['harDir'].nil? -%>
+    harDir: <%= @bbot_params['test']['harDir'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['kerberosRootDir']) && !@bbot_params['test']['kerberosRootDir'].nil? -%>
+    kerberosRootDir: <%= @bbot_params['test']['kerberosRootDir'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['hostChromeHomeDirectory']) &&
+      !@bbot_params['test']['hostChromeHomeDirectory'].nil? -%>
+    hostChromeHomeDirectory: <%= @bbot_params['test']['hostChromeHomeDirectory'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['testTimeoutOverheadSec']) &&
+      !@bbot_params['test']['testTimeoutOverheadSec'].nil? -%>
+    testTimeoutOverheadSec: <%= @bbot_params['test']['testTimeoutOverheadSec'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['testResultTimeoutSec']) && !@bbot_params['test']['testResultTimeoutSec'].nil? -%>
+    testResultTimeoutSec: <%= @bbot_params['test']['testResultTimeoutSec'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['testEndTimeoutSec']) && !@bbot_params['test']['testEndTimeoutSec'].nil? -%>
+    testEndTimeoutSec: <%= @bbot_params['test']['testEndTimeoutSec'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['testTearDownTimeoutSec']) &&
+      !@bbot_params['test']['testTearDownTimeoutSec'].nil? -%>
+    testTearDownTimeoutSec: <%= @bbot_params['test']['testTearDownTimeoutSec'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['deserializeTimeoutSec']) &&
+      !@bbot_params['test']['deserializeTimeoutSec'].nil? -%>
+    deserializeTimeoutSec: <%= @bbot_params['test']['deserializeTimeoutSec'] %>
+<% end -%>
+<% if defined?(@bbot_params['test']['serializeTimeoutSec']) && !@bbot_params['test']['serializeTimeoutSec'].nil? -%>
+    serializeTimeoutSec: <%= @bbot_params['test']['serializeTimeoutSec'] %>
+<% end -%>
+<% end -%>
+<% if defined?(@bbot_params['podman']) -%>
+
+  podman:
+<% if defined?(@bbot_params['podman']['imageName']) && !@bbot_params['podman']['imageName'].nil? -%>
+    imageName: <%= @bbot_params['podman']['imageName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['rootfs']) && !@bbot_params['podman']['rootfs'].nil? -%>
+    rootfs: <%= @bbot_params['podman']['rootfs'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['socketPath']) && !@bbot_params['podman']['socketPath'].nil? -%>
+    socketPath: <%= @bbot_params['podman']['socketPath'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['sharedDir']) && !@bbot_params['podman']['sharedDir'].nil? -%>
+    sharedDir: <%= @bbot_params['podman']['sharedDir'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['ipv4NetworkName']) && !@bbot_params['podman']['ipv4NetworkName'].nil? -%>
+    ipv4NetworkName: <%= @bbot_params['podman']['ipv4NetworkName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['dualStackNetworkName']) &&
+      !@bbot_params['podman']['dualStackNetworkName'].nil? -%>
+    dualStackNetworkName: <%= @bbot_params['podman']['dualStackNetworkName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['ipv4PodName']) && !@bbot_params['podman']['ipv4PodName'].nil? -%>
+    ipv4PodName: <%= @bbot_params['podman']['ipv4PodName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['dualStackPodName']) && !@bbot_params['podman']['dualStackPodName'].nil? -%>
+    dualStackPodName: <%= @bbot_params['podman']['dualStackPodName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['installationRetryMax']) &&
+      !@bbot_params['podman']['installationRetryMax'].nil? -%>
+    installationRetryMax: <%= @bbot_params['podman']['installationRetryMax'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['installationRetryWaitMinMs']) &&
+      !@bbot_params['podman']['installationRetryWaitMinMs'].nil? -%>
+    installationRetryWaitMinMs: <%= @bbot_params['podman']['installationRetryWaitMinMs'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['installationRetryWaitMaxMs']) &&
+      !@bbot_params['podman']['installationRetryWaitMaxMs'].nil? -%>
+    installationRetryWaitMaxMs: <%= @bbot_params['podman']['installationRetryWaitMaxMs'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['infraPodImageName']) && !@bbot_params['podman']['infraPodImageName'].nil? -%>
+    infraPodImageName: <%= @bbot_params['podman']['infraPodImageName'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['infraPodImagePath']) && !@bbot_params['podman']['infraPodImagePath'].nil? -%>
+    infraPodImagePath: <%= @bbot_params['podman']['infraPodImagePath'] %>
+<% end -%>
+<% if defined?(@bbot_params['podman']['containerResourceLimitsChrome']) -%>
+    containerResourceLimitsChrome:
+<% if defined?(@bbot_params['podman']['containerResourceLimitsChrome']['memoryLimitBytes']) &&
+      !@bbot_params['podman']['containerResourceLimitsChrome']['memoryLimitBytes'].nil? -%>
+      memoryLimitBytes: <%= @bbot_params['podman']['containerResourceLimitsChrome']['memoryLimitBytes'] %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% if defined?(@bbot_params['installation']) -%>
+
+  installation:
+<% if defined?(@bbot_params['installation']['timeoutSec']) && !@bbot_params['installation']['timeoutSec'].nil? -%>
+    timeoutSec: <%= @bbot_params['installation']['timeoutSec'] %>
+<% end -%>
+<% end -%>
+<% if defined?(@bbot_params['sqlite']) -%>
+
+  sqlite:
+<% if defined?(@bbot_params['sqlite']['dbFilePath']) && !@bbot_params['sqlite']['dbFilePath'].nil? -%>
+    dbFilePath: <%= @bbot_params['sqlite']['dbFilePath'] %>
+<% end -%>
+<% end -%>
+<% end -%>
