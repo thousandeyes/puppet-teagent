@@ -42,7 +42,7 @@ class te_agent::service {
     hasstatus  => true,
     require    => [
       Package['te-agent'],
-      File['/etc/te-agent.cfg']i,
+      File['/etc/te-agent.cfg'],
     ],
     subscribe  => File['/etc/te-agent.cfg'],
   }
